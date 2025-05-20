@@ -14,6 +14,146 @@ interface SearchFilterType {
   checked: boolean;
 }
 
+// ข้อมูลจำลองสำหรับ AnimatedTestimonials
+const topStudents = [
+  {
+    quote: "คะแนนสะสม: 100 คะแนน | ICT | CPE",
+    name: "Boss1",
+    designation: "อันดับที่ 1",
+    src: "/image1.png",
+  },
+  {
+    quote: "คะแนนสะสม: 90 คะแนน | ICT | CPE",
+    name: "Boss2",
+    designation: "อันดับที่ 2",
+    src: "/image1.png",
+  },
+  {
+    quote: "คะแนนสะสม: 80 คะแนน | ICT | CPE",
+    name: "Boss3",
+    designation: "อันดับที่ 3",
+    src: "/image1.png",
+  },
+  {
+    quote: "คะแนนสะสม: 70 คะแนน | ICT | CPE",
+    name: "Boss4",
+    designation: "อันดับที่ 4",
+    src: "/image1.png",
+  },
+  {
+    quote: "คะแนนสะสม: 60 คะแนน | ICT | CPE",
+    name: "Boss5",
+    designation: "อันดับที่ 5",
+    src: "/image1.png",
+  },
+];
+
+// ข้อมูลจำลองสำหรับ DraggableCard
+const topEvents = [
+  {
+    id: 1,
+    title: "Express Training",
+    organizer: "INET",
+    participants: 50,
+    image: "/inet2.png",
+  },
+  {
+    id: 2,
+    title: "C# & .NAT Training",
+    organizer: "Online asset",
+    participants: 40,
+    image: "/cws.png",
+  },
+  {
+    id: 3,
+    title: "Basic JavaScript",
+    organizer: "INET",
+    participants: 30,
+    image: "/inet1.png",
+  },
+  {
+    id: 4,
+    title: "UX/UI Design Training",
+    organizer: "IIG",
+    participants: 20,
+    image: "uxui.png",
+  },
+  {
+    id: 5,
+    title: "SQL & NoSQL Training",
+    organizer: "Online asset",
+    participants: 10,
+    image: "/snd.png",
+  },
+];
+
+interface TopEventCardProps {
+  event: EventType;
+  rank: number;
+}
+
+const TopEventCard: React.FC<TopEventCardProps> = ({ event, rank }) => {
+  const { theme } = useTheme();
+
+  return (
+    <DraggableCardContainer className="mx-auto my-4">
+      <DraggableCardBody
+        className={`${
+          theme === "dark" ? "bg-gray-800" : "bg-white"
+        } w-64 h-96 p-6 relative overflow-hidden`}
+      >
+        {/* เนื้อหาการ์ด */}
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="text-center mb-4">
+            <span
+              className={`text-lg font-bold ${
+                theme === "dark" ? "text-white" : "text-gray-800"
+              }`}
+            >
+              อันดับที่ {rank}
+            </span>
+          </div>
+
+          <div className="mb-4 rounded-lg overflow-hidden">
+            <img
+              src={event.image}
+              alt={event.title}
+              className="w-full h-32 object-cover"
+            />
+          </div>
+
+          <h3
+            className={`text-lg font-semibold mb-2 ${
+              theme === "dark" ? "text-white" : "text-gray-800"
+            }`}
+          >
+            {event.title}
+          </h3>
+
+          <div
+            className={`text-sm mb-2 ${
+              theme === "dark" ? "text-gray-300" : "text-gray-600"
+            }`}
+          >
+            ผู้จัด: {event.organizer}
+          </div>
+
+          <div className="mt-auto">
+            <div
+              className={`text-base font-medium ${
+                theme === "dark" ? "text-blue-400" : "text-blue-600"
+              }`}
+            >
+              ผู้เข้าร่วม: {event.participants} คน
+            </div>
+          </div>
+        </div>
+      </DraggableCardBody>
+    </DraggableCardContainer>
+  );
+};
+
+
 function HomePage() {
   const { theme } = useTheme();
   const [searchQuery, setSearchQuery] = useState('');
@@ -138,6 +278,57 @@ function HomePage() {
             showIndicators={true}
             showArrows={true}
           />
+        </div>
+
+        {/* นิสิตที่มีคะแนนสะสมมากที่สุด */}
+        <div className="mb-12">
+          <h2
+            className={`text-xl font-bold mb-6 text-center ${
+              theme === "dark" ? "text-white" : "text-gray-800"
+            }`}
+          >
+            นิสิตที่มีคะแนนสะสมมากที่สุด
+          </h2>
+
+          <div
+            className={`p-6 rounded-lg ${
+              theme === "dark" ? "bg-gray-800" : "bg-white"
+            } shadow-lg`}
+          >
+            <AnimatedTestimonials testimonials={topStudents} autoplay={true} />
+          </div>
+        </div>
+
+        {/* กิจกรรมที่มีคนเข้าร่วมมากที่สุด */}
+        <div className="mb-12">
+          <h2
+            className={`text-xl font-bold mb-6 text-center ${
+              theme === "dark" ? "text-white" : "text-gray-800"
+            }`}
+          >
+            กิจกรรมที่มีคนเข้าร่วมมากที่สุด
+          </h2>
+
+          <div className="relative r  ">
+            {/* ข้อความพื้นหลัง */}
+            <div
+              className="absolute inset-0 flex flex-col justify-center items-cednter opacity-10 pointer-events-none select-none mt-38 ml-96"
+              style={{ zIndex: 0 }}
+            >
+              <div className="text-6xl font-bold text-black mb-8">
+                GOOD EVENT
+              </div>
+              <div className="text-6xl font-bold text-black mb-8">
+                GOOD TRAINING
+              </div>
+              <div className="text-6xl font-bold text-black">GOOD SKILL</div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {topEvents.map((event, index) => (
+              <TopEventCard key={event.id} event={event} rank={index + 1} />
+            ))}
+          </div>
         </div>
         
         {/* แท็บเลือกประเภทกิจกรรม */}
