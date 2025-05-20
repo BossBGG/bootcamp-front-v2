@@ -13,6 +13,11 @@ interface ProtectedRouteProps {
  * @returns The children if authenticated, otherwise redirects to login
  */
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  // ปรับให้เข้าถึงได้เสมอโดยไม่มีการ auth
+  return <>{children}</>;
+  
+  // โค้ดเดิมที่มีการตรวจสอบ auth
+  /*
   const { isAuthenticated } = useAuth();
   
   if (!isAuthenticated) {
@@ -22,6 +27,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   
   // Return the children if authenticated
   return <>{children}</>;
+  */
 };
 
 export default ProtectedRoute;

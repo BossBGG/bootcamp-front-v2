@@ -16,6 +16,11 @@ interface RoleBasedRouteProps {
  * @returns The children if authorized, otherwise redirects to appropriate page
  */
 const RoleBasedRoute = ({ children, allowedRoles }: RoleBasedRouteProps) => {
+  // ปรับให้เข้าถึงได้เสมอโดยไม่มีการตรวจสอบ role
+  return <>{children}</>;
+  
+  // โค้ดเดิมที่มีการตรวจสอบ role
+  /*
   const { isAuthenticated, userRole } = useAuth();
   
   // If not authenticated at all, redirect to login
@@ -37,6 +42,7 @@ const RoleBasedRoute = ({ children, allowedRoles }: RoleBasedRouteProps) => {
     // Regular student or unknown role
     return <Navigate to="/" replace />;
   }
+  */
 };
 
 export default RoleBasedRoute;

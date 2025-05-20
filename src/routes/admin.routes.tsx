@@ -14,45 +14,27 @@ import UserSuspensionPage from '../pages/UserSuspensionPage';
  * Admin-specific routes
  */
 const adminRoutes: RouteObject[] = [
-  // หน้าแดชบอร์ดแอดมินหลัก (กำหนดใน index.tsx แล้ว)
+  // หน้าแดชบอร์ดแอดมินหลัก
   {
     path: '/admin',
-    element: (
-      <RoleBasedRoute allowedRoles={['admin']}>
-        <AdminDashboardPage />
-      </RoleBasedRoute>
-    ),
+    element: <AdminDashboardPage />,
   },
   // หน้าจัดการคำขออนุมัติกิจกรรม
   {
     path: '/admin/event-approval',
-    element: (
-      <RoleBasedRoute allowedRoles={['admin']}>
-        <EventApprovalRequestsPage />
-      </RoleBasedRoute>
-    ),
+    element: <EventApprovalRequestsPage />,
   },
  
   // หน้าจัดการสิทธิ์ผู้ใช้
   {
     path: '/admin/user-permissions',
-    element: (
-      <RoleBasedRoute allowedRoles={['admin']}>
-        <UserPermissionsPage />
-      </RoleBasedRoute>
-    ),
+    element: <UserPermissionsPage />,
   },
   // หน้าระงับบัญชีผู้ใช้
   {
     path: '/admin/user-suspension',
-    element: (
-      <RoleBasedRoute allowedRoles={['admin']}>
-        <UserSuspensionPage />
-      </RoleBasedRoute>
-    ),
+    element: <UserSuspensionPage />,
   },
- 
-  
 ];
 
 export default adminRoutes;

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useTheme } from '../stores/theme.store';
 import SearchBar from '../components/SearchBar';
@@ -6,12 +7,23 @@ import { EventSectionCard } from '../components/layouts';
 import Carousel from '../components/Carousel';
 import { mockEvents, getEventsByType } from '../data/mockEvents';
 import LoadingPage from './LoadingPage';
+import { AnimatedTestimonials } from '../components/ui/animated-testimonials';
+import { DraggableCardContainer, DraggableCardBody } from '../components/ui/draggable-card';
 
 // ประเภทสำหรับฟิลเตอร์การค้นหา
 interface SearchFilterType {
   id: string;
   label: string;
   checked: boolean;
+}
+
+// ประเภทสำหรับข้อมูลกิจกรรมยอดนิยม
+interface EventType {
+  id: number;
+  title: string;
+  organizer: string;
+  participants: number;
+  image: string;
 }
 
 // ข้อมูลจำลองสำหรับ AnimatedTestimonials
@@ -49,7 +61,7 @@ const topStudents = [
 ];
 
 // ข้อมูลจำลองสำหรับ DraggableCard
-const topEvents = [
+const topEvents: EventType[] = [
   {
     id: 1,
     title: "Express Training",
@@ -309,10 +321,10 @@ function HomePage() {
             กิจกรรมที่มีคนเข้าร่วมมากที่สุด
           </h2>
 
-          <div className="relative r  ">
+          <div className="relative">
             {/* ข้อความพื้นหลัง */}
             <div
-              className="absolute inset-0 flex flex-col justify-center items-cednter opacity-10 pointer-events-none select-none mt-38 ml-96"
+              className="absolute inset-0 flex flex-col justify-center items-center opacity-10 pointer-events-none select-none"
               style={{ zIndex: 0 }}
             >
               <div className="text-6xl font-bold text-black mb-8">

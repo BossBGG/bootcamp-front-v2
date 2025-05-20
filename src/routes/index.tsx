@@ -2,8 +2,6 @@ import { RouteObject } from 'react-router-dom';
 import React from 'react';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
-import RoleBasedRoute from '../core/guards/RoleBasedRoute';
-import ProtectedRoute from '../core/guards/ProtectedRoute';
 import ProfilePage from '../pages/ProfilePage';
 import EventTypePage from '../pages/EventTypePage';
 import SearchEventPage from '../pages/SearchEventPage';
@@ -21,7 +19,7 @@ const NotFoundPage = React.lazy(() => import('../pages/NotFound404.page'));
 
 /**
  * กำหนดเส้นทางทั้งหมดในแอปพลิเคชัน
- * รวมถึงการป้องกันเส้นทางตามบทบาทผู้ใช้
+ * ปรับให้เข้าถึงทุกเส้นทางได้โดยไม่ต้องมีการยืนยันตัวตน
  */
 const routes: RouteObject[] = [
   // หน้าหลักที่ทุกคนเข้าถึงได้
@@ -39,32 +37,20 @@ const routes: RouteObject[] = [
     path: '/register',
     element: <RegisterPage />,
   },
-  // หน้ากิจกรรมของฉัน - ต้องล็อกอินก่อน และไม่ใช่แอดมิน
+  // หน้ากิจกรรมของฉัน
   {
     path: '/activities',
-    element: (
-      <RoleBasedRoute allowedRoles={['student', 'staff']}>
-        <ActivitiesPage />
-      </RoleBasedRoute>
-    ),
+    element: <ActivitiesPage />,
   },
-  // หน้าประวัติกิจกรรม - ต้องล็อกอินก่อน และไม่ใช่แอดมิน
+  // หน้าประวัติกิจกรรม
   {
     path: '/history',
-    element: (
-      <RoleBasedRoute allowedRoles={['student', 'staff']}>
-        <HistoryPage />
-      </RoleBasedRoute>
-    ),
+    element: <HistoryPage />,
   },
-   // หน้าโปรไฟล์ - ต้องล็อกอินแล้วเท่านั้น
+   // หน้าโปรไฟล์
    {
     path: '/profile',
-    element: (
-      <ProtectedRoute>
-        <ProfilePage />
-      </ProtectedRoute>
-    ),
+    element: <ProfilePage />,
   },
   // หน้าประเภทกิจกรรม
   {
@@ -81,28 +67,28 @@ const routes: RouteObject[] = [
     path: '/search',
     element: <SearchEventPage />,
   },
-  // แดชบอร์ดเจ้าหน้าที่ - เข้าถึงได้เฉพาะเจ้าหน้าที่
+  // แดชบอร์ดเจ้าหน้าที่
   {
     path: '/staff-dashboard',
-    element: (
-      <RoleBasedRoute allowedRoles={['staff']}>
-        <StaffDashboardPage />
-      </RoleBasedRoute>
-    ),
+    element: <StaffDashboardPage />,
   },
-  // แดชบอร์ดแอดมิน - เข้าถึงได้เฉพาะแอดมิน
+  // แดชบอร์ดแอดมิน
   {
     path: '/admin',
-    element: (
-      <RoleBasedRoute allowedRoles={['admin']}>
-        <AdminDashboardPage />
-      </RoleBasedRoute>
-    ),
+    element: <AdminDashboardPage />,
   },
-  // นำเข้าเส้นทางย่อยสำหรับเจ้าหน้าที่ (ยกเว้น staff-dashboard ที่กำหนดด้านบนแล้ว)
-  ...staffRoutes.filter(route => route.path !== '/staff-dashboard'),
-  // นำเข้าเส้นทางย่อยสำหรับแอดมิน (ยกเว้น admin ที่กำหนดด้านบนแล้ว)
-  ...adminRoutes.filter(route => route.path !== '/admin'),
+  
+  // เพิ่มเส้นทางย่อยของเจ้าหน้าที่และแอดมินเข้าไปโดยตรง
+  ...staffRoutes.map(route => ({
+    ...route,
+    element: route.element,
+  })),
+  
+  ...adminRoutes.map(route => ({
+    ...route,
+    element: route.element,
+  })),
+  
   // หน้า 404 สำหรับเส้นทางที่ไม่มีอยู่
   {
     path: '*',

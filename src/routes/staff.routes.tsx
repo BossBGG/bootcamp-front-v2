@@ -14,62 +14,36 @@ import ApprovalRequestsPage from '../pages/ApprovalRequestsPage';
  * Staff-specific routes
  */
 const staffRoutes: RouteObject[] = [
-  // หน้าแดชบอร์ดเจ้าหน้าที่หลัก (กำหนดใน index.tsx แล้ว)
+  // หน้าแดชบอร์ดเจ้าหน้าที่หลัก
   {
     path: '/staff-dashboard',
-    element: (
-      <RoleBasedRoute allowedRoles={['staff']}>
-        <StaffDashboardPage />
-      </RoleBasedRoute>
-    ),
+    element: <StaffDashboardPage />,
   },
   // หน้าสร้างกิจกรรมใหม่
   {
     path: '/create-event',
-    element: (
-      <RoleBasedRoute allowedRoles={['staff']}>
-        <CreateEventPage />
-      </RoleBasedRoute>
-    ),
+    element: <CreateEventPage />,
   },
   // หน้ารายการกิจกรรมของเจ้าหน้าที่
   {
     path: '/staff/activities',
-    element: (
-      <RoleBasedRoute allowedRoles={['staff']}>
-        <StaffActivitiesPage />
-      </RoleBasedRoute>
-    ),
+    element: <StaffActivitiesPage />,
   },
   // หน้าแก้ไขกิจกรรม
   {
     path: '/edit-event/:id',
-    element: (
-      <RoleBasedRoute allowedRoles={['staff']}>
-        <EditEventPage />
-      </RoleBasedRoute>
-    ),
+    element: <EditEventPage />,
   },
   // หน้าแสดงรายชื่อผู้เข้าร่วมกิจกรรม
   {
     path: '/staff/activity-participants/:id',
-    element: (
-      <RoleBasedRoute allowedRoles={['staff']}>
-        <ActivityParticipantsPage />
-      </RoleBasedRoute>
-    ),
+    element: <ActivityParticipantsPage />,
   },
   // หน้าคำขออนุมัติเข้าร่วมกิจกรรม
   {
     path: '/staff/approval-requests',
-    element: (
-      <RoleBasedRoute allowedRoles={['staff']}>
-        <ApprovalRequestsPage />
-      </RoleBasedRoute>
-    ),
+    element: <ApprovalRequestsPage />,
   },
-  
- 
 ];
 
 export default staffRoutes;
